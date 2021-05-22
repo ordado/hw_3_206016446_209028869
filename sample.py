@@ -1,6 +1,3 @@
-import cluster
-
-
 class Sample:
 
     def __init__(self, s_id, genes, label):

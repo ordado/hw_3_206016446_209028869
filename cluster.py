@@ -1,6 +1,3 @@
-import sample
-
-
 class Cluster:
 
     def __init__(self, c_id, samples):
@@ -47,12 +44,13 @@ class Cluster:
             dic_label[sample.label] += 1
         find_max = 0
         for key in dic_label.keys():
-            if dic_label[key] < find_max:
+            if dic_label[key] > find_max:
                 find_max = dic_label[key]
-        list_min_label = []
+        list_max_label = []
         for key in dic_label.keys():
-            list_min_label.append(key)
-        list_min_label.sort()
+            if dic_label[key] == find_max:
+                list_max_label.append(key)
+        list_max_label.sort()
         # print silhouette
-        print(list_min_label[0], end=", silhouette = ")
-        print(silhouette)
+        print(list_max_label[0], end=", silhouette = ")
+        print("{0:.3f}".format(silhouette))
