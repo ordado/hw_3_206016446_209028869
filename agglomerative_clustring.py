@@ -1,4 +1,5 @@
 import cluster
+import math
 
 
 class AgglomerativeClustring:
@@ -60,7 +61,22 @@ class AgglomerativeClustring:
             for sample in cluster.samples:
                 sum_silhoeutte += temp_silhoeutte[sample.s_id]
                 sum_number_of_sample += 1
-        return sum_silhoeutte/sum_number_of_sample
+        return sum_silhoeutte / sum_number_of_sample
+
+    def compute_rand_index(self):
+        sum_good_couples = 0
+        sum_samples = 0
+        for cluster1 in self.clusters:
+            for sample1 in cluster1.samples:
+                for cluster2 in self.clusters:
+                    for sample2 in cluster2.samples:
+                        if sample2 != sample1:
+                            sum_samples += 1
+                            if sample1.label == sample2.label and cluster1 == cluster2:
+                                sum_good_couples += 1
+                            if sample1.label != sample2.label and cluster1 != cluster2:
+                                sum_good_couples += 1
+        return sum_good_couples / sum_samples
 
     def run(self, max_clusters):
         # compute distance between all the clusters:
@@ -123,4 +139,5 @@ class AgglomerativeClustring:
         for cluster in self.clusters:
             cluster.print_details(silhouette_clusters[cluster.c_id])
         print("whole data: silhouette = ", end="")
-        print("{0:.3f}".format(self.compute_summery_silhoeutte_all_cluster()))
+        print("{0:.3f}".format(self.compute_summery_silhoeutte_all_cluster()), end=", IR = ")
+        print("{0:.3f}".format(self.compute_rand_index()))
