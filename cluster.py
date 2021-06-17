@@ -5,6 +5,11 @@ class Cluster:
         self.samples = samples
 
     def merge(self, other):
+        """
+                merge two cluster together, updating self
+                param other: the cluster to be merged with
+                return: None
+                """
         if self.c_id > other.c_id:
             self.c_id = other.c_id
         for sample in other.samples:
@@ -27,7 +32,13 @@ class Cluster:
         del other
 
     def print_details(self, silhouette):
-        # print cliuster id
+        """
+        The function of the method is to print the cluster data) from the point identifiers it contains in ascending
+        order, label dominant,And silhouette index)
+        param silhouette: The silhouette of the cluster
+        return: none
+        """
+        # print cluster id
         print("Cluster ", end="")
         print(self.c_id, end=": ")
         # print list of id samples

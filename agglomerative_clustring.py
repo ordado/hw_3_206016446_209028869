@@ -1,5 +1,4 @@
 import cluster
-import math
 
 
 class AgglomerativeClustring:
@@ -11,6 +10,12 @@ class AgglomerativeClustring:
             self.clusters.append(cluster.Cluster(sample.s_id, [sample]))
 
     def comput_in_xi(self, cluster, sample):
+        """
+        compute the average distance of sample from cluster from the points in the cluster to which it is associated
+        param: cluster
+        param: sample
+        return: return the distance
+        """
         in_xi = 0
         for sample1 in cluster.samples:
             if sample != sample1:
@@ -18,6 +23,12 @@ class AgglomerativeClustring:
         return in_xi / (len(cluster.samples) - 1)
 
     def compute_out_xi(self, cluster, sample):
+        """
+        Calculates the minimum distance between the sample and the cluster to which it is not associated
+        param: cluster
+        param: sample
+        return: return the distance
+        """
         out_xi = []
         for cluster1 in self.clusters:
             if cluster != cluster1:
@@ -29,6 +40,11 @@ class AgglomerativeClustring:
         return out_xi[0]
 
     def compute_silhoeutte(self):
+        """
+        The role of the method is a dictionary in which the keys are identifiers (all) of the samples in the data,
+        and the appropriate value for each key is the measure of the silhouette of the sample
+        return: dictionary
+        """
         silhoeutte = {}
         for cluster in self.clusters:
             for sample in cluster.samples:
@@ -41,6 +57,10 @@ class AgglomerativeClustring:
         return silhoeutte
 
     def compute_summery_silhoeutte(self):
+        """
+
+        return:
+        """
         silhoeutte = {}
         temp_silhoeutte = self.compute_silhoeutte()
         for cluster in self.clusters:
@@ -54,6 +74,12 @@ class AgglomerativeClustring:
         return silhoeutte
 
     def compute_summery_silhoeutte_all_cluster(self):
+        """
+        The function of the method is to return a dictionary that summarizes the silhouette index for the
+        algae cluster result
+        return: A dictionary whose keys will be the cluster identifiers (id_c,)
+        The values of the dictionary will be the silhouette values of each cluster
+        """
         temp_silhoeutte = self.compute_silhoeutte()
         sum_silhoeutte = 0
         sum_number_of_sample = 0
@@ -64,6 +90,10 @@ class AgglomerativeClustring:
         return sum_silhoeutte / sum_number_of_sample
 
     def compute_rand_index(self):
+        """
+        The role of the method is to calculate the Index Rand value of the algorithm
+        return: none
+        """
         sum_good_couples = 0
         sum_samples = 0
         for cluster1 in self.clusters:
@@ -79,6 +109,11 @@ class AgglomerativeClustring:
         return sum_good_couples / sum_samples
 
     def run(self, max_clusters):
+        """
+               merging the clusters until having only max_clusters clusters
+               param max_clusters: the num of clusters to have in the end of the run method
+               return: None
+               """
         # compute distance between all the clusters:
         list_distance_all_cluster = []
         for cluster in self.clusters:

@@ -5,11 +5,11 @@ import agglomerative_clustring
 
 
 def main(argv):
-    main_data = data.Data("Leukemia_sample.csv")
+    main_data = data.Data("Leukemia.csv")
     single_link = link.SingleLink()
     agglomerative_clustring1 = agglomerative_clustring.AgglomerativeClustring(single_link, main_data.create_samples())
     agglomerative_clustring1.run(7)
-    main_data2 = data.Data("Leukemia_sample.csv")
+    main_data2 = data.Data("Leukemia.csv")
     complete_link = link.CompleteLink()
     print("")
     agglomerative_clustring2 = agglomerative_clustring.AgglomerativeClustring(complete_link,

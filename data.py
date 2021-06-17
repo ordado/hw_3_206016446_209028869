@@ -8,6 +8,10 @@ class Data:
         self.data = df.to_dict(orient="list")
 
     def create_samples(self):
+        """
+        The method output is a list of objects of type Sample class
+        return: list of objects of type Sample
+        """
         new_list = []
         for index, value in enumerate(self.data["samples"]):
             new_sample = sample.Sample(0, [], "")
